@@ -13,7 +13,7 @@ from datetime import datetime
 # Configuration
 BACKEND_URL = "https://d96c4034-f976-4531-b6d2-dc75088aa0dc.preview.emergentagent.com/api"
 TEST_USER_ID = f"test_user_{uuid.uuid4().hex[:8]}"
-TEST_REPO_URL = "https://github.com/octocat/Hello-World"
+TEST_REPO_URL = "https://github.com/microsoft/vscode-python"
 
 # Test data
 TEST_AI_CONFIG = {
