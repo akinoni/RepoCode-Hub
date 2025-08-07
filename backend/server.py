@@ -146,10 +146,17 @@ async def fetch_github_repo(repo_url: str) -> Dict:
         
         async with aiohttp.ClientSession() as session:
             async with session.get(api_url) as response:
-                if response.status != 200:
+                if response.status == 404:
+                    # Try master branch if main doesn't exist
+                    api_url = f"https://api.github.com/repos/{owner}/{repo}/git/trees/master?recursive=1"
+                    async with session.get(api_url) as response:
+                        if response.status != 200:
+                            raise ValueError("Repository not found or not accessible")
+                        tree_data = await response.json()
+                elif response.status != 200:
                     raise ValueError("Repository not found or not accessible")
-                
-                tree_data = await response.json()
+                else:
+                    tree_data = await response.json()
                 
                 # Filter for code files
                 code_extensions = {'.py', '.js', '.jsx', '.ts', '.tsx', '.java', '.cpp', '.c', '.go', '.rs', '.php', '.rb', '.swift', '.kt'}
