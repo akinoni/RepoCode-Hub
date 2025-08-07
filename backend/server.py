@@ -111,6 +111,8 @@ async def save_ai_config(config: AIConfig):
         )
         
         return {"message": "AI configuration saved successfully"}
+    except HTTPException:
+        raise  # Re-raise HTTPException to preserve status code
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to save configuration: {str(e)}")
 
