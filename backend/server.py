@@ -141,7 +141,7 @@ async def fetch_github_repo(repo_url: str) -> Dict:
         
         owner, repo = match.groups()
         
-        # GitHub API to get repository tree
+        # GitHub API to get repository tree - try main first, then master
         api_url = f"https://api.github.com/repos/{owner}/{repo}/git/trees/main?recursive=1"
         
         async with aiohttp.ClientSession() as session:
